@@ -18,6 +18,10 @@ export class FruitsComponent implements OnInit {
     this.getAll();
   }
 
+  clearFruits() {
+    this.fruits = [];
+  }
+
   getAll() {
     this.service.getAll().subscribe((fruits: Fruit[]) => {
       this.fruits = fruits;
@@ -32,17 +36,17 @@ export class FruitsComponent implements OnInit {
   view() {
     this.editMode = false;
   }
-  exit() {
-    throw new Error('Method not implemented.');
-  }
 
-  update(_t4: Fruit) {
-    throw new Error('Method not implemented.');
+  update(fruit: Fruit) {
+    this.service.update(fruit).subscribe(() => {
+      this.editMode = false;
+      this.clearFruits();
+    });
   }
 
   delete(fruit: Fruit) {
     this.service.delete(fruit).subscribe(() => {
-      window.location.reload();
+      this.clearFruits();
     });
   }
 }

@@ -16,6 +16,10 @@ export class FruitService {
     return this.http.get<Fruit[]>(this.url);
   }
 
+  update(fruit: Fruit): Observable<Fruit> {
+    return this.http.put<Fruit>(`${this.url}/${fruit.id}`, fruit);
+  }
+
   delete(fruit: Fruit): Observable<any> {
     return this.http.delete<any>(`${this.url}/${fruit.id}`);
   }
