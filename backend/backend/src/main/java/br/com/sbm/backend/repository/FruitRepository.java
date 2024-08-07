@@ -4,16 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-
-import com.mysql.cj.xdevapi.Statement;
 
 import br.com.sbm.backend.model.Fruit;
 
@@ -42,7 +41,8 @@ public class FruitRepository {
 					fruit.setId(rst.getLong("id"));
 					fruit.setQuantity(rst.getInt("quantity"));
 					fruit.setOrigin(rst.getString("origin"));
-					fruit.setImportDate(rst.getTimestamp("importDate").toLocalDateTime());
+					LocalDateTime importDate = rst.getObject("importDate", LocalDateTime.class);
+					fruit.setImportDate(importDate);
 
 					fruits.add(fruit);
 				}
@@ -68,7 +68,8 @@ public class FruitRepository {
 			try (ResultSet rst = pstm.getGeneratedKeys()) {
 				if (rst.next()) {
 					form.setId(rst.getLong(1));
-				};
+				}
+
 			} catch (Exception e) {
 				new SQLException(e);
 			}
@@ -77,5 +78,24 @@ public class FruitRepository {
 			new SQLException(e);
 		}
 		return form.getId();
+	}
+
+	public Fruit update(Long id, Fruit form) throws SQLException {
+		String sql = "UPDATE fruit SET quantity = ?, origin = ?, importDate = ? WHERE id = ?";
+
+		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+			pstm.setInt(1, form.getQuantity());
+			pstm.setString(2, form.getOrigin());
+			pstm.setObject(3, form.getImportDate());
+			pstm.setLong(4, id);
+
+			pstm.execute();
+
+			form.setId(id);
+
+		} catch (Exception e) {
+			new SQLException(e);
+		}
+		return form;
 	}
 }

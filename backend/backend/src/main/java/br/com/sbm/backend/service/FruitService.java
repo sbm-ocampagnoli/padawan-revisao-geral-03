@@ -29,4 +29,13 @@ public class FruitService {
 		}
 		return new ResponseEntity<>(form, HttpStatus.BAD_REQUEST);
 	}
+
+	public ResponseEntity<Fruit> update(Long id, Fruit form) throws SQLException {
+		Fruit fruitUpdated = this.repository.update(id, form);
+
+		if (fruitUpdated.getId() != 0) {
+			return new ResponseEntity<>(fruitUpdated, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(fruitUpdated, HttpStatus.BAD_REQUEST);
+	}
 }
