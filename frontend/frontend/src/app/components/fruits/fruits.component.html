@@ -1,13 +1,33 @@
-<div class="container">
-  <ul class="fruit" *ngFor="let fruit of fruits">
-    <li class="fruit-details">
-      <span class="label">Quantidade:</span> {{ this.fruit.quantity }}
-    </li>
-    <li class="fruit-details">
-      <span class="label">Origem:</span> {{ this.fruit.origin }}
-    </li>
-    <li class="fruit-details">
-      <span class="label">Data da Importação:</span> {{ this.fruit.importDate }}
-    </li>
-  </ul>
+<div class="grid-container">
+  <div *ngFor="let fruit of fruits" class="container">
+    <ul *ngIf="!this.editMode">
+      <li><span>Quantidade:</span> {{ fruit.quantity }}</li>
+      <li><span>Origem:</span> {{ fruit.origin }}</li>
+      <li><span>Data da importação:</span> R$ {{ fruit.importDate }}</li>
+    </ul>
+    <ul *ngIf="this.editMode">
+      <li>
+        <span>Quantidade:</span>
+        <input type="text" [(ngModel)]="this.fruit.quantity" />
+      </li>
+      <li>
+        <span>Origem:</span>
+        <input type="text" [(ngModel)]="this.fruit.origin" />
+      </li>
+      <li>
+        <span>Data da importação:</span
+        ><input type="number" [(ngModel)]="this.fruit.importDate" />
+      </li>
+    </ul>
+    <div class="actions-container" *ngIf="!editMode">
+      <button class="editarBtn btn" (click)="openToEdit()">Editar</button>
+      <button class="excluirBtn btn" (click)="delete(this.fruit)">
+        Excluir
+      </button>
+    </div>
+    <div class="actions-container" *ngIf="editMode">
+      <button class="editarBtn btn" (click)="update(this.fruit)">Salvar</button>
+      <button class="excluirBtn btn" (click)="view()">Cancelar</button>
+    </div>
+  </div>
 </div>

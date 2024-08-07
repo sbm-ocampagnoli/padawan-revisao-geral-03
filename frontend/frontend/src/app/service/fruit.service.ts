@@ -15,4 +15,8 @@ export class FruitService {
   getAll(): Observable<Fruit[]> {
     return this.http.get<Fruit[]>(this.url);
   }
+
+  delete(fruit: Fruit): Observable<any> {
+    return this.http.delete<any>(`${this.url}/${fruit.id}`);
+  }
 }

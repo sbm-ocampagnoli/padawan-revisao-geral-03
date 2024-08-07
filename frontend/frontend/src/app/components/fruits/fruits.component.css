@@ -5,3 +5,14 @@
   flex-direction: row;
   margin: 20vh;
 }
+
+ul {
+  font-size: 16px;
+  border: 2px solid;
+  padding: 5vh;
+  margin: 5vh;
+}
+
+span {
+  font-weight: bold;
+}

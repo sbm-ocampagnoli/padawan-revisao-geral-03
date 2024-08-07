@@ -9,6 +9,8 @@ import { FruitService } from 'src/app/service/fruit.service';
 })
 export class FruitsComponent implements OnInit {
   @Input() fruits: Fruit[] = [];
+  editMode: boolean = false;
+  addMode: boolean = false;
 
   constructor(private service: FruitService) {}
 
@@ -20,6 +22,27 @@ export class FruitsComponent implements OnInit {
     this.service.getAll().subscribe((fruits: Fruit[]) => {
       this.fruits = fruits;
       console.log(this.fruits);
+    });
+  }
+
+  openToEdit() {
+    this.editMode = true;
+  }
+
+  view() {
+    this.editMode = false;
+  }
+  exit() {
+    throw new Error('Method not implemented.');
+  }
+
+  update(_t4: Fruit) {
+    throw new Error('Method not implemented.');
+  }
+
+  delete(fruit: Fruit) {
+    this.service.delete(fruit).subscribe(() => {
+      window.location.reload();
     });
   }
 }
