@@ -10,7 +10,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+
+import com.mysql.cj.xdevapi.Statement;
 
 import br.com.sbm.backend.model.Fruit;
 
@@ -50,5 +53,29 @@ public class FruitRepository {
 			new SQLException(e);
 		}
 		return fruits;
+	}
+
+	public Long save(Fruit form) throws SQLException {
+		String sql = "INSERT INTO fruit (quantity, origin, importDate) " + "VALUES (?, ?, ?)";
+
+		try (PreparedStatement pstm = connection.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+			pstm.setInt(1, form.getQuantity());
+			pstm.setString(2, form.getOrigin());
+			pstm.setObject(3, form.getImportDate());
+
+			pstm.execute();
+
+			try (ResultSet rst = pstm.getGeneratedKeys()) {
+				if (rst.next()) {
+					form.setId(rst.getLong(1));
+				};
+			} catch (Exception e) {
+				new SQLException(e);
+			}
+
+		} catch (Exception e) {
+			new SQLException(e);
+		}
+		return form.getId();
 	}
 }
