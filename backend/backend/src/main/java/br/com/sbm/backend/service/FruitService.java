@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.sbm.backend.model.Fruit;
 import br.com.sbm.backend.repository.FruitRepository;
@@ -37,5 +38,10 @@ public class FruitService {
 			return new ResponseEntity<>(fruitUpdated, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(fruitUpdated, HttpStatus.BAD_REQUEST);
+	}
+
+	public ResponseEntity<?> delete(Long id) throws SQLException {
+		return this.repository.delete(id);
+
 	}
 }

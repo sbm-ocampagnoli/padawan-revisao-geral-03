@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import br.com.sbm.backend.model.Fruit;
@@ -97,5 +98,18 @@ public class FruitRepository {
 			new SQLException(e);
 		}
 		return form;
+	}
+
+	public ResponseEntity<?> delete(Long id) throws SQLException {
+		String sql = "DELETE FROM fruit WHERE id = ?";
+		
+		try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+			pstm.setLong(1, id);
+			pstm.execute();
+			return new ResponseEntity<>(id, HttpStatus.OK);
+		} catch (Exception e) {
+			new SQLException(e);
+			return new ResponseEntity<>(id, HttpStatus.BAD_REQUEST);
+		}
 	}
 }
