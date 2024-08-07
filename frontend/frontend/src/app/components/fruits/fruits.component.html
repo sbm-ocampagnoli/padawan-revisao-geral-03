@@ -1,0 +1,13 @@
+<div class="container">
+  <ul class="fruit" *ngFor="let fruit of fruits">
+    <li class="fruit-details">
+      <span class="label">Quantidade:</span> {{ this.fruit.quantity }}
+    </li>
+    <li class="fruit-details">
+      <span class="label">Origem:</span> {{ this.fruit.origin }}
+    </li>
+    <li class="fruit-details">
+      <span class="label">Data da Importação:</span> {{ this.fruit.importDate }}
+    </li>
+  </ul>
+</div>
