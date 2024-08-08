@@ -12,6 +12,7 @@ export class FruitsComponent implements OnInit {
   editMode: boolean = false;
   addMode: boolean = false;
   newFruit: Fruit = { origin: '', importDate: new Date(), quantity: 0 };
+  fruitToSearch: Fruit = { origin: '', importDate: undefined, quantity: 0 };
 
   constructor(private service: FruitService) {}
 
@@ -26,7 +27,6 @@ export class FruitsComponent implements OnInit {
   getAll() {
     this.service.getAll().subscribe((fruits: Fruit[]) => {
       this.fruits = fruits;
-      console.log(this.fruits);
     });
   }
 
@@ -60,6 +60,14 @@ export class FruitsComponent implements OnInit {
   delete(fruit: Fruit) {
     this.service.delete(fruit).subscribe(() => {
       this.clearFruits();
+    });
+  }
+
+  search(fruit: Fruit) {
+    debugger;
+    this.clearFruits();
+    this.service.filterComposed(fruit).subscribe((fruits) => {
+      this.fruits = fruits;
     });
   }
 }

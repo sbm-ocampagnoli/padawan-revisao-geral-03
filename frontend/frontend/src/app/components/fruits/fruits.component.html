@@ -1,20 +1,23 @@
 <div class="container-search">
   <div class="actions-btn">
     <button (click)="openToAdd()">Adicionar</button>
-    <button>Pesquisar</button>
+    <button (click)="search(this.fruitToSearch)">Pesquisar</button>
   </div>
   <div class="filter-search">
     <label for=""
       >Quantidade:
-      <input type="number" required />
+      <input type="number" required [(ngModel)]="this.fruitToSearch.quantity" />
     </label>
     <label for=""
       >Origem:
-      <input type="text" />
+      <input type="text" [(ngModel)]="this.fruitToSearch.origin" />
     </label>
     <label for=""
       >Data da Importação:
-      <input type="datetime-local" />
+      <input
+        type="datetime-local"
+        [(ngModel)]="this.fruitToSearch.importDate"
+      />
     </label>
   </div>
 </div>
@@ -45,7 +48,7 @@
     <ul *ngIf="!this.editMode">
       <li><span>Quantidade:</span> {{ fruit.quantity }}</li>
       <li><span>Origem:</span> {{ fruit.origin }}</li>
-      <li><span>Data da importação:</span> R$ {{ fruit.importDate }}</li>
+      <li><span>Data da importação:</span> {{ fruit.importDate }}</li>
     </ul>
     <ul *ngIf="this.editMode">
       <li>

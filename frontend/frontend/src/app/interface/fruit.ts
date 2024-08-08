@@ -1,6 +1,6 @@
 export interface Fruit {
-  id?: number,
-  quantity: number,
-  origin: string,
-  importDate: Date
+  id?: number;
+  quantity: number;
+  origin: string;
+  importDate?: Date;
 }

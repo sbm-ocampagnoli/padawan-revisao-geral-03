@@ -144,7 +144,7 @@ public class FruitRepository {
 			}
 
 			if (importDate != null) {
-				pstm.setObject(paramIndex++, importDate);
+				pstm.setObject(paramIndex++, importDate.withSecond(0).withNano(0));
 			}
 
 			pstm.execute();
