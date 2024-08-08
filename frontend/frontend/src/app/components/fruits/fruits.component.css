@@ -16,3 +16,10 @@ ul {
 span {
   font-weight: bold;
 }
+
+.container-search {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 10vh;
+}

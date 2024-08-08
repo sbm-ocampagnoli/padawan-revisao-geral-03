@@ -11,6 +11,7 @@ export class FruitsComponent implements OnInit {
   @Input() fruits: Fruit[] = [];
   editMode: boolean = false;
   addMode: boolean = false;
+  newFruit: Fruit = { origin: '', importDate: new Date(), quantity: 0 };
 
   constructor(private service: FruitService) {}
 
@@ -33,8 +34,20 @@ export class FruitsComponent implements OnInit {
     this.editMode = true;
   }
 
+  openToAdd() {
+    this.addMode = true;
+  }
+
   view() {
     this.editMode = false;
+    this.addMode = false;
+  }
+
+  add(newFruit: Fruit) {
+    this.service.add(newFruit).subscribe(() => {
+      this.newFruit = { origin: '', quantity: 0, importDate: new Date() };
+      this.clearFruits();
+    });
   }
 
   update(fruit: Fruit) {

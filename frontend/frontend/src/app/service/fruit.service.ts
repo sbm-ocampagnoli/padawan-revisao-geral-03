@@ -15,6 +15,9 @@ export class FruitService {
   getAll(): Observable<Fruit[]> {
     return this.http.get<Fruit[]>(this.url);
   }
+  add(newFruit: Fruit): Observable<Fruit> {
+    return this.http.post<Fruit>(`${this.url}`, newFruit);
+  }
 
   update(fruit: Fruit): Observable<Fruit> {
     return this.http.put<Fruit>(`${this.url}/${fruit.id}`, fruit);

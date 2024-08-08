@@ -1,3 +1,45 @@
+<div class="container-search">
+  <div class="actions-btn">
+    <button (click)="openToAdd()">Adicionar</button>
+    <button>Pesquisar</button>
+  </div>
+  <div class="filter-search">
+    <label for=""
+      >Quantidade:
+      <input type="number" required />
+    </label>
+    <label for=""
+      >Origem:
+      <input type="text" />
+    </label>
+    <label for=""
+      >Data da Importação:
+      <input type="datetime-local" />
+    </label>
+  </div>
+</div>
+
+<div class="grid-container" *ngIf="this.addMode">
+  <div class="add-container">
+    <label
+      >Quantidade:
+      <input type="number" name="" [(ngModel)]="this.newFruit.quantity"
+    /></label>
+    <label
+      >Origem: <input type="text" name="" [(ngModel)]="this.newFruit.origin"
+    /></label>
+    <label
+      >Data da Importação:
+      <input
+        type="datetime-local"
+        name=""
+        [(ngModel)]="this.newFruit.importDate"
+    /></label>
+    <button (click)="add(newFruit)">Salvar</button>
+    <button (click)="view()">Cancelar</button>
+  </div>
+</div>
+
 <div class="grid-container">
   <div *ngFor="let fruit of fruits" class="container">
     <ul *ngIf="!this.editMode">
