@@ -1,6 +1,7 @@
 package br.com.sbm.backend.service;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,9 @@ public class FruitService {
 	public ResponseEntity<?> delete(Long id) throws SQLException {
 		return this.repository.delete(id);
 
+	}
+
+	public List<Fruit> filterComposed(String origin, int quantity, LocalDateTime importDate) {
+		return this.repository.filterComposed(origin, quantity, importDate);
 	}
 }

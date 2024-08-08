@@ -102,8 +102,8 @@ public class FruitRepository {
 
 	public ResponseEntity<?> delete(Long id) throws SQLException {
 		String sql = "DELETE FROM fruit WHERE id = ?";
-		
-		try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+
+		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
 			pstm.setLong(1, id);
 			pstm.execute();
 			return new ResponseEntity<>(id, HttpStatus.OK);
@@ -111,5 +111,62 @@ public class FruitRepository {
 			new SQLException(e);
 			return new ResponseEntity<>(id, HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	public List<Fruit> filterComposed(String origin, int quantity, LocalDateTime importDate) {
+		List<Fruit> fruits = new ArrayList<Fruit>();
+
+		String sql = "SELECT id, quantity, origin, importDate FROM fruit WHERE 1=1";
+
+		if (!origin.isEmpty() && origin != null) {
+			sql += " AND origin LIKE ?";
+		}
+
+		if (quantity != 0 && quantity > -1) {
+			sql += " AND quantity = ?";
+		}
+
+		if (importDate != null) {
+			sql += " AND importDate = ?";
+		}
+
+		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+
+			int paramIndex = 1;
+
+			if (!origin.isEmpty() && origin != null) {
+				pstm.setString(paramIndex++, "%"+ origin + "%");
+			}
+
+			if (quantity != 0 && quantity > -1) {
+				pstm.setInt(paramIndex++, quantity);
+
+			}
+
+			if (importDate != null) {
+				pstm.setObject(paramIndex++, importDate);
+			}
+
+			pstm.execute();
+
+			try (ResultSet rst = pstm.getResultSet()) {
+				while (rst.next()) {
+					Fruit fruit = new Fruit();
+					fruit.setId(rst.getLong("id"));
+					fruit.setOrigin(rst.getString("origin"));
+					fruit.setQuantity(rst.getInt("quantity"));
+					LocalDateTime importDateObj = rst.getObject("importDate", LocalDateTime.class);
+					fruit.setImportDate(importDateObj);
+
+					fruits.add(fruit);
+				}
+			} catch (Exception e) {
+				new SQLException(e);
+			}
+
+		} catch (Exception e) {
+			new SQLException(e);
+		}
+		return fruits;
 	}
 }
