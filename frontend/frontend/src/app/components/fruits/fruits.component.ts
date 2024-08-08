@@ -16,9 +16,7 @@ export class FruitsComponent implements OnInit {
 
   constructor(private service: FruitService) {}
 
-  ngOnInit(): void {
-    this.getAll();
-  }
+  ngOnInit(): void {}
 
   clearFruits() {
     this.fruits = [];
@@ -35,6 +33,7 @@ export class FruitsComponent implements OnInit {
   }
 
   openToAdd() {
+    this.fruits = [];
     this.addMode = true;
   }
 
@@ -51,6 +50,7 @@ export class FruitsComponent implements OnInit {
   }
 
   update(fruit: Fruit) {
+    debugger;
     this.service.update(fruit).subscribe(() => {
       this.editMode = false;
       this.clearFruits();
@@ -64,7 +64,8 @@ export class FruitsComponent implements OnInit {
   }
 
   search(fruit: Fruit) {
-    debugger;
+    this.addMode = false;
+    this.editMode = false;
     this.clearFruits();
     this.service.filterComposed(fruit).subscribe((fruits) => {
       this.fruits = fruits;
