@@ -48,7 +48,10 @@
     <ul *ngIf="!this.editMode">
       <li><span>Quantidade:</span> {{ fruit.quantity }}</li>
       <li><span>Origem:</span> {{ fruit.origin }}</li>
-      <li><span>Data da importação:</span> {{ fruit.importDate }}</li>
+      <li>
+        <span>Data da importação:</span>
+        {{ this.fruit.importDate }}
+      </li>
     </ul>
     <ul *ngIf="this.editMode">
       <li>

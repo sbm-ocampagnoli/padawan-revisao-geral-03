@@ -2,5 +2,5 @@ export interface Fruit {
   id?: number;
   quantity: number;
   origin: string;
-  importDate?: Date;
+  importDate: Date | string | undefined;
 }

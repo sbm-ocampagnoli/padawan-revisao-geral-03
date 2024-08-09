@@ -63,10 +63,14 @@ export class FruitsComponent implements OnInit {
     });
   }
 
-  search(fruit: Fruit) {
+  enableSearchMode() {
     this.addMode = false;
     this.editMode = false;
     this.clearFruits();
+  }
+
+  search(fruit: Fruit) {
+    this.enableSearchMode();
     this.service.filterComposed(fruit).subscribe((fruits) => {
       this.fruits = fruits;
     });
