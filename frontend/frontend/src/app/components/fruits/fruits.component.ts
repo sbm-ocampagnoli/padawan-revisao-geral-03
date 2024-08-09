@@ -30,6 +30,13 @@ export class FruitsComponent implements OnInit {
 
   openToEdit() {
     this.editMode = true;
+    this.fruits.forEach((fruit) => {
+      if (fruit.importDate) {
+        fruit.importDate = this.convertToDefaultDate(
+          fruit.importDate as string
+        );
+      }
+    });
   }
 
   openToAdd() {
@@ -74,5 +81,18 @@ export class FruitsComponent implements OnInit {
     this.service.filterComposed(fruit).subscribe((fruits) => {
       this.fruits = fruits;
     });
+  }
+
+  convertToDefaultDate(newDate: string): string {
+    let newDateFormat = '';
+    let day = newDate.slice(0, 2);
+    let month = newDate.slice(3, 5);
+    let year = newDate.slice(6, 10);
+    let hours = newDate.slice(13, 15);
+    let minutes = newDate.slice(16, 18);
+
+    newDateFormat = String(`${year}-${month}-${day}T${hours}:${minutes}`);
+
+    return newDateFormat;
   }
 }
