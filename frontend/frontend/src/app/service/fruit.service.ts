@@ -66,7 +66,6 @@ export class FruitService {
   }
 
   convertToDateTime(data: Date): string {
-    debugger;
     let dateString = data.toString();
     return dateString.slice(0, 19);
   }
